@@ -124,7 +124,7 @@ public class Main {
     {
         Security.addProvider(new BouncyCastleProvider());
 
-        String caminhoArquivo = "C:\\Users\\gusta\\Desktop\\dataHash.txt";
+        String caminhoArquivo = "C:\\notepad\\local\\here\\dataHash.txt";
 
         List<String> elementos = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
