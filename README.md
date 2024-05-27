@@ -1,6 +1,3 @@
-Here's a README for your code:
-
----
 
 # Merkle Tree Implementation
 
@@ -17,7 +14,7 @@ This Java program demonstrates the implementation of a Merkle tree, a data struc
 
 ## Dependencies
 
-- **Bouncy Castle Provider**: The Bouncy Castle cryptographic library is used for security purposes.
+- **Bouncy Castle Provider**: The Bouncy Castle cryptographic library is used for security purposes. 
 - **Java I/O**: Standard Java I/O libraries are used for file handling.
 - **Java Security**: Java Security libraries are employed for cryptographic operations.
 
