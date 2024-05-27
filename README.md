@@ -46,6 +46,3 @@ The program will output the constructed Merkle tree and the root hash based on t
 
 - Ensure that the Bouncy Castle Provider library is correctly included in the classpath for cryptographic operations.
 
----
-
-This should provide users with a comprehensive overview of your program's functionality and dependencies.
