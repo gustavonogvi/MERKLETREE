@@ -1,5 +1,8 @@
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -64,7 +67,7 @@ class MerkleTree {
             folhas.add(new Node(null, null, Node.hash(e), e, false));
         }
         if (folhas.size() % 2 == 1) {
-            folhas.add(folhas.get( folhas.size() - 1).copiar());
+            folhas.add(folhas.get(folhas.size() - 1).copiar());
         }
         return construirArvoreRec(folhas);
     }
@@ -119,12 +122,11 @@ class MerkleTree {
 }
 
 public class Main {
-    public static void main(String[] args)
-            throws NoSuchAlgorithmException, IOException
-    {
+    public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
         Security.addProvider(new BouncyCastleProvider());
 
-        String caminhoArquivo = "C:\\notepad\\local\\here\\dataHash.txt";
+        String caminhoArquivo = "C:\\A\\B\\C\\dataHash.txt";
+        String caminhoRaizHash = "C:\\A\\B\\C\\rootHash.txt";
 
         List<String> elementos = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
@@ -134,17 +136,40 @@ public class Main {
             }
         }
 
-
-        //System.out.print("Entrada: [");
-        //for (String elemento : elementos) {
-        //System.out.print(elemento + " ");
-        //}
         System.out.println("Entrada: " + new StringJoiner(", ").add(elementos.toString()));
         System.out.println("\n");
 
         MerkleTree arvore = new MerkleTree(elementos);
         arvore.imprimirArvore();
 
-        System.out.println("Raiz Hash: " + arvore.getRaizHash() + "\n");
+        String novoRootHash = arvore.getRaizHash();
+        System.out.println("Novo Raiz Hash: " + novoRootHash + "\n");
+
+        String raizHashOriginal = null;
+        try {
+            raizHashOriginal = carregarRaizHash(caminhoRaizHash);
+            System.out.println("Raiz Hash Primordial: " + raizHashOriginal);
+            if (raizHashOriginal.equals(novoRootHash)) {
+                System.out.println("INTEGRIDADE APROVADA!.");
+            } else {
+                System.out.println("OS DADOS NÃO ESTÃO INTEGROS!.");
+            }
+        } catch (IOException e) {
+            System.out.println("not found!.");
+        }
+
+        if (raizHashOriginal == null || !raizHashOriginal.equals(novoRootHash)) {
+            salvarRaizHash(caminhoRaizHash, novoRootHash);
+            System.out.println("hash adicionado ao bloco de notas.");
+        }
+    }
+
+    public static void salvarRaizHash(String caminhoSaida, String hash) throws IOException {
+        Files.writeString(Paths.get(caminhoSaida), hash, StandardOpenOption.CREATE);
+    }
+
+    public static String carregarRaizHash(String caminhoEntrada) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(caminhoEntrada)), StandardCharsets.UTF_8).trim();
     }
 }
+
