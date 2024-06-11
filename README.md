@@ -40,5 +40,10 @@ This class is responsible for reading data from a file, constructing the Merkle 
    - Verifies the integrity of the data against the saved root hash.
    - Saves the new root hash if it differs from the original.
 
-## Conclusion
-This project demonstrates the implementation of a Merkle Tree in Java using the Tiger hash algorithm. It showcases how to construct the tree, print its structure, and verify data integrity.
+
+## Resources
+1. You can find an in-depth explanation of the Tiger algorithm by accessing the PDF on ResearchGate [here](https://www.researchgate.net/publication/221327094_Cryptanalysis_of_the_Tiger_Hash_Function).
+2. To understand Merkle Trees, which are crucial for data verification, you can read this article on Medium [here](https://medium.com/@rajeevprasanna/understanding-merkle-trees-the-backbone-of-data-verification-13b39af26fff).
+3. For a general explanation about hash functions, you can refer to this PDF from Columbia University [here](https://www.cs.columbia.edu/~suman/security_1/crypto_summary.pdf).
+4. For fundamentals of bits and bytes, you can refer to this document from Wiley [here](https://catalogimages.wiley.com/images/db/pdf/0471210293.content.pdf).
+
