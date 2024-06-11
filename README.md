@@ -1,48 +1,45 @@
+# Merkle Tree Project in Java
 
-# Merkle Tree Implementation
+This project implements a Merkle Tree in Java, using the Tiger hash algorithm provided by the Bouncy Castle library. The Merkle Tree is a data structure used to verify the integrity of a set of data.
 
-## Overview
+## Requirements
 
-This Java program demonstrates the implementation of a Merkle tree, a data structure used in cryptographic applications for efficiently summarizing and verifying the integrity of large sets of data. The Merkle tree is constructed using a hash function, creating a tree structure where each leaf node represents a data element and each non-leaf node represents the hash of its children's hashes.
+- Java 8 or higher
+- Bouncy Castle library
+## Setup
+1. Download and install the [Bouncy Castle library]([https://www.bouncycastle.org/download/bcprov-jdk15on-170.jar](https://www.bouncycastle.org/download/bouncy-castle-java/#latest)).
+2. Add the library to your Java project.
 
-## Features
+## Project Structure
+- `Node`: Represents a node in the Merkle Tree.
+- `MerkleTree`: Constructs the Merkle Tree from a list of values.
+- `Main`: Main class that reads data from a file, constructs the Merkle Tree, and verifies the data integrity.
 
-- **Merkle Tree Construction**: The program constructs a Merkle tree from a list of input values.
-- **Hash Function**: It utilizes the Tiger hash function for generating hash values.
-- **Tree Printing**: The constructed Merkle tree can be printed to visualize its structure.
-- **Root Hash Retrieval**: The root hash of the Merkle tree, representing the overall integrity of the data set, can be obtained.
+## Classes and Methods
 
-## Dependencies
+### Node
+This class represents a node in the Merkle Tree. Each node contains references to its left and right children, its hash value, its content, and a flag indicating if it was copied.
 
-- **Bouncy Castle Provider**: The Bouncy Castle cryptographic library is used for security purposes. [Download Here](https://www.bouncycastle.org/download/bouncy-castle-java/)
-- **Java I/O**: Standard Java I/O libraries are used for file handling.
-- **Java Security**: Java Security libraries are employed for cryptographic operations.
+### MerkleTree
+This class constructs the Merkle Tree from a list of values. It includes methods to build the tree, print the tree structure, and retrieve the root hash.
 
-## Usage
+### Main
+This class is responsible for reading data from a file, constructing the Merkle Tree, and verifying the data integrity. It also handles saving and loading the root hash to and from a file.
 
-1. **Input Data**: Provide input data in a text file. Each line of the file represents a data element.
-2. **Compile**: Compile the Java source code using a Java compiler.
-3. **Run**: Execute the compiled program, providing the path to the input data file as a command-line argument.
-4. **Output**: The program will print the input data, construct the Merkle tree, print its structure, and display the root hash.
+## How to Use
+1. Ensure the Bouncy Castle library is added to your project.
+2. Place the input data file (`dataHash.txt`) in the specified path.
+3. Run the `Main` class. The program will read the input data, construct the Merkle Tree, and print the tree structure.
+4. The program will compare the new root hash with the original root hash stored in `rootHash.txt`. If the hashes match, the data integrity is verified. If not, the new root hash will be saved to the file.
 
 ## Example
+1. Prepare an input file (`dataHash.txt`) with data values.
+2. Run the program:
+   - The program reads the input values.
+   - Constructs the Merkle Tree.
+   - Prints the tree structure.
+   - Verifies the integrity of the data against the saved root hash.
+   - Saves the new root hash if it differs from the original.
 
-Suppose you have a file named `dataHash.txt` containing the following data:
-```
-data1
-data2
-data3
-data4
-```
-
-You can run the program as follows:
-```
-java Main
-```
-
-The program will output the constructed Merkle tree and the root hash based on the provided data.
-
-## Note
-
-- Ensure that the Bouncy Castle Provider library is correctly included in the classpath for cryptographic operations.
-
+## Conclusion
+This project demonstrates the implementation of a Merkle Tree in Java using the Tiger hash algorithm. It showcases how to construct the tree, print its structure, and verify data integrity.
