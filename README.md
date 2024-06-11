@@ -6,7 +6,7 @@ This project implements a Merkle Tree in Java, using the Tiger hash algorithm pr
 
 - Bouncy Castle library
 ## Setup
-1. Download and install the [Bouncy Castle library]([https://www.bouncycastle.org/download/bcprov-jdk15on-170.jar](https://www.bouncycastle.org/download/bouncy-castle-java/#latest)).
+1. Download and install the [Bouncy Castle library](https://www.bouncycastle.org/download/bouncy-castle-java/#latest).
 2. Add the library to your Java project.
 
 ## Project Structure
