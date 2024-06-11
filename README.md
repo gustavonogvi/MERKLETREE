@@ -28,8 +28,10 @@ This class is responsible for reading data from a file, constructing the Merkle 
 ## How to Use
 1. Ensure the Bouncy Castle library is added to your project.
 2. Place the input data file (`dataHash.txt`) in the specified path.
-3. Run the `Main` class. The program will read the input data, construct the Merkle Tree, and print the tree structure.
-4. The program will compare the new root hash with the original root hash stored in `rootHash.txt`. If the hashes match, the data integrity is verified. If not, the new root hash will be saved to the file.
+3. **Update the file path**: Open the `Main` class and locate the lines where the `filePath` and `rootHashPath` variables are set. Update these paths to match the location of your `dataHash.txt` and `rootHash.txt` files on your system.
+4. Run the `Main` class. The program will read the input data, construct the Merkle Tree, and print the tree structure.
+5. The program will compare the new root hash with the original root hash stored in `rootHash.txt`. If the hashes match, the data integrity is verified. If not, the new root hash will be saved to the file.
+
 
 ## Example
 1. Prepare an input file (`dataHash.txt`) with data values.
