@@ -2,13 +2,6 @@
 
 This project implements a Merkle Tree in Java, using the Tiger hash algorithm provided by the Bouncy Castle library. The Merkle Tree is a data structure used to verify the integrity of a set of data.
 
-## Performance Analysis
-
-Discuss the performance characteristics of using the Tiger Hash Algorithm in Merkle Trees compared to other hash algorithms. This could include considerations like speed, memory usage, and collision resistance.
-
-![ASIC Performance Comparison for Tiger](C:\Users\gusta\Downloads\ASIC-performance-comparison-for-Tiger.png)
-
-
 ## Requirements
 
 - Bouncy Castle library
