@@ -15,9 +15,9 @@ import java.util.StringJoiner;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 class Node {
-    Node left, right; // Left and right children
-    String value, content; // Hash value and content
-    boolean wasCopied; // Indicates if the node is a copy
+    Node left, right; //left and right children
+    String value, content; //hash value and content
+    boolean wasCopied; //indicates if the node is a copy
 
     Node(Node left, Node right, String value, String content, boolean wasCopied) {
         this.left = left;
@@ -27,7 +27,7 @@ class Node {
         this.wasCopied = wasCopied;
     }
 
-    // Method to compute the hash using the Tiger algorithm
+    //method to compute the hash using the Tiger algorithm
     static String hash(String val) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("Tiger");
         byte[] hash = digest.digest(val.getBytes(StandardCharsets.UTF_8));
@@ -41,50 +41,50 @@ class Node {
         return hexString.toString();
     }
 
-    // Method to copy the current node
+    //method to copy the current node
     Node copy() {
         return new Node(this.left, this.right, this.value, this.content, true);
     }
 }
 
 class MerkleTree {
-    Node root; // Root of the Merkle Tree
+    Node root; //root of the Merkle Tree
 
-    // Constructor to build the Merkle Tree
+    //constructor to build the Merkle Tree
     MerkleTree(List<String> values) throws NoSuchAlgorithmException {
         this.root = buildTree(values);
     }
 
-    // Method to build the tree from a list of values
+    //method to build the tree from a list of values
     Node buildTree(List<String> values) throws NoSuchAlgorithmException {
         List<Node> leaves = new ArrayList<>();
-        // Create leaf nodes
+        //create leaf nodes
         for (String e : values) {
             leaves.add(new Node(null, null, Node.hash(e), e, false));
         }
-        // Duplicate the last node if the number of leaves is odd
+        //duplicate the last node if the number of leaves is odd
         if (leaves.size() % 2 == 1) {
             leaves.add(leaves.get(leaves.size() - 1).copy());
         }
         return buildTreeRec(leaves);
     }
 
-    // Recursive method to build the tree
+    //recursive method to build the tree
     Node buildTreeRec(List<Node> nodeList) throws NoSuchAlgorithmException {
-        // Duplicate the last node if the number of nodes is odd
+        //duplicate the last node if the number of nodes is odd
         if (nodeList.size() % 2 == 1) {
             nodeList.add(nodeList.get(nodeList.size() - 1).copy());
         }
         int half = nodeList.size() / 2;
 
-        // Base case: if there are only two nodes, create the root
+        //base case: if there are only two nodes, create the root
         if (nodeList.size() == 2) {
             return new Node(nodeList.get(0), nodeList.get(1),
                     Node.hash(nodeList.get(0).value + nodeList.get(1).value),
                     nodeList.get(0).content + "+" + nodeList.get(1).content, false);
         }
 
-        // Recursively build the left and right subtrees
+        //recursively build the left and right subtrees
         Node left = buildTreeRec(nodeList.subList(0, half));
         Node right = buildTreeRec(nodeList.subList(half, nodeList.size()));
         String value = Node.hash(left.value + right.value);
@@ -92,10 +92,10 @@ class MerkleTree {
         return new Node(left, right, value, content, false);
     }
 
-    // Method to print the tree
+    //method to print the tree
     void printTree() { printTreeRec(this.root); }
 
-    // Recursive method to print the tree
+    //recursive method to print the tree
     void printTreeRec(Node node) {
         if (node != null) {
             if (node.left != null) {
@@ -116,20 +116,20 @@ class MerkleTree {
         }
     }
 
-    // Method to get the root hash
+    //method to get the root hash
     String getRootHash() { return this.root.value; }
 }
 
 public class Main {
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
-        // Add BouncyCastle as a security provider
+        //add BouncyCastle as a security provider
         Security.addProvider(new BouncyCastleProvider());
 
-        // File paths
+        //file paths
         String filePath = "C:\\Users\\gusta\\Desktop\\dataHash.txt";
         String rootHashPath = "C:\\Users\\gusta\\Desktop\\rootHash.txt";
 
-        // Read data from the file
+        //read data from the file
         List<String> elements = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -141,15 +141,15 @@ public class Main {
         System.out.println("Input: " + new StringJoiner(", ").add(elements.toString()));
         System.out.println("\n");
 
-        // Build the Merkle tree and print it
+        //build the Merkle tree and print it
         MerkleTree tree = new MerkleTree(elements);
         tree.printTree();
 
-        // Get the new root hash
+        //get the new root hash
         String newRootHash = tree.getRootHash();
         System.out.println("New Root Hash: " + newRootHash + "\n");
 
-        // Check if the new root hash matches the original root hash
+        //check if the new root hash matches the original root hash
         String originalRootHash = null;
         try {
             originalRootHash = loadRootHash(rootHashPath);
@@ -163,19 +163,19 @@ public class Main {
             System.out.println("Root hash file not found.");
         }
 
-        // Save the new root hash if it doesn't match the original
+        //save the new root hash if it doesn't match the original
         if (originalRootHash == null || !originalRootHash.equals(newRootHash)) {
             saveRootHash(rootHashPath, newRootHash);
             System.out.println("Hash added to the file.");
         }
     }
 
-    // Method to save the root hash to a file
+    //method to save the root hash to a file
     public static void saveRootHash(String outputPath, String hash) throws IOException {
         Files.writeString(Paths.get(outputPath), hash, StandardOpenOption.CREATE);
     }
 
-    // Method to load the root hash from a file
+    //method to load the root hash from a file
     public static String loadRootHash(String inputPath) throws IOException {
         return new String(Files.readAllBytes(Paths.get(inputPath)), StandardCharsets.UTF_8).trim();
     }
